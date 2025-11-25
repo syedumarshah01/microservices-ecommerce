@@ -1,11 +1,13 @@
 import Product from "../models/productModel.js"
 
 
+
+
 const getAllProducts  = async (req, res) => {
+    const {offset, limit} = req.query
 
     try{
-        const allProducts = await Product.find({})
-
+        const allProducts = await Product.find().skip(offset).limit(limit)
         if(allProducts.length) {
             return res.status(200).json(allProducts)
         } else {
@@ -35,6 +37,7 @@ const addNewProduct = async (req, res) => {
 
     try {
         const product = await Product.create(newProductObject)
+        console.log(product)
 
         if(!product) {
             return res.status(500).json({message: "Product couldn't be created..."})
