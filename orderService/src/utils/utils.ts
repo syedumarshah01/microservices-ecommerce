@@ -1,4 +1,4 @@
-import { OrderItem } from "../types/types";
+import { OrderItem, OrderStatus } from "../types/types";
 
 export function generateCustomOrderId() {
   const prefix = 'ORD'; // Or a store-specific prefix
@@ -41,4 +41,10 @@ export const isValidOrderItem = (obj: any): obj is OrderItem => {
   )
 }
 
+
+export const isValidOrderStatus = (status: string): boolean => {
+  return (
+    Object.values(OrderStatus).includes(status as OrderStatus)
+  )
+}
 

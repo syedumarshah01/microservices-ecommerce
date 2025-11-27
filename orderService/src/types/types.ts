@@ -17,3 +17,13 @@ export interface Order {
     total_amount: number,
     
 }
+
+
+export enum OrderStatus {
+    Placed = "Placed",
+    Pending = "Pending",
+    Processing = "Processing",
+    Shipped = "Shipped",
+    Delivered = "Delivered",
+    Cancelled = "Cancelled"
+}
