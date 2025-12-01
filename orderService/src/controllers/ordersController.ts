@@ -34,7 +34,7 @@ export const createOrder = async(req: Request, res: Response) => {
 
     res.status(200).json({success: true, message: "Order Placed Successfully..."})
 
-    await orderQueue.add('persist-order', {order, orderItems, action: 'createOrder'})
+    await orderQueue.add('createOrder', {order, orderItems})
 }
 
 
@@ -48,7 +48,7 @@ export const updateOrderStatus = async(req: Request, res: Response) => {
 
     res.status(200).json({success: true, message: "Order status changed successfully..."})
 
-    await orderQueue.add('update-order-status', {orderStatus, orderId, action: 'updateOrderStatus'})
+    await orderQueue.add('updateOrderStatus', {orderStatus, orderId})
 }
 
 

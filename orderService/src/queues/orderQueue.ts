@@ -1,11 +1,7 @@
 import {Queue} from 'bullmq'
+import { redisConnection } from '../../../shared/config/redis'
 
-
-const connection = {
-    host: 'localhost',
-    port: 6379
-}
-const orderQueue = new Queue('order-persistence', {connection})
+const orderQueue = new Queue('orderQueue', {connection: redisConnection})
 
 
 export default orderQueue

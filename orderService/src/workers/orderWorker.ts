@@ -5,26 +5,23 @@ import { ordersItemsTable } from "../schema/orderItems";
 import { Order, PostgresOrderItem } from "../types/types";
 import { OrderStatus } from "../types/types";
 import { eq } from "drizzle-orm";
+import { redisConnection } from "../../../shared/config/redis";
 
 
-const connection = {
-    host: 'localhost',
-    port: 6379
-}
-const orderWorker = new Worker('order-persistence',
+const orderWorker = new Worker('orderQueue',
     async(job: Job) => {
-        const {order, orderItems, orderStatus, orderId, action} = job.data
+        const {order, orderItems, orderStatus, orderId} = job.data
 
-        if(action === 'createOrder') {
+        if(job.name === 'createOrder') {
             createOrder(order, orderItems)
-        } else if(action === 'updateOrderStatus') {
+        } else if(job.name === 'updateOrderStatus') {
             updateOrderStatus(orderId, orderStatus)
         }
 
        
 },
     {
-        connection,
+        connection: redisConnection,
         concurrency: 10
     }
 )
